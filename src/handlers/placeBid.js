@@ -7,7 +7,7 @@ import commonMiddleware from '../lib/commonMiddleware';
 
 const dynamoDB = new AWS.DynamoDB.DocumentClient();
 
-async function placeBid(event, context) {
+const placeBid = async (event, context) => {
 
   const { id } = event.pathParameters;
   const { amount } = event.body;

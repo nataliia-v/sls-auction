@@ -5,7 +5,7 @@ import commonMiddleware from '../lib/commonMiddleware';
 
 const dynamoDB = new AWS.DynamoDB.DocumentClient();
 
-export async function getAuctionById( id ) {
+export const getAuctionById = async ( id ) => {
   let auction;
 
   try {
@@ -27,7 +27,7 @@ export async function getAuctionById( id ) {
   return auction;
 }
 
-async function getAuction( event, context ) {
+const getAuction = async ( event, context ) => {
   const { id } = event.pathParameters;
 
   const auction = await getAuctionById( id );

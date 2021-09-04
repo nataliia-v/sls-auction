@@ -5,7 +5,7 @@ import commonMiddleware from '../lib/commonMiddleware';
 
 const dynamoDB = new AWS.DynamoDB.DocumentClient();
 
-async function getAuctions(event, context) {
+const getAuctions = async (event, context) => {
 
   let auctions;
 

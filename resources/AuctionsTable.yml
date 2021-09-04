@@ -6,6 +6,23 @@ AuctionsTable:
     AttributeDefinitions:
       - AttributeName: id
         AttributeType: S
+      - AttributeName: status
+        AttributeType: S
+      - AttributeName: endingAt
+        AttributeType: S
     KeySchema:
       - AttributeName: id
         KeyType: HASH
+    GlobalSecondaryIndexes:
+      - IndexName: statusAndEndDate
+        KeySchema:
+          - AttributeName: status
+            KeyType: HASH #key type is HASH, so we can search by status, whether it's open, closed or any other status we might have.
+          - AttributeName: endingAt
+            KeyType: RANGE #type RANGE allow us to sort and filter based on the ending date.
+        Projection:
+          ProjectionType: ALL # if I query based on a "status" or "endingAt", I'm going to get all the attributes of the items in table
+
+# When I crate GlobalSecondaryIndexes DynamoDB creates a sort of virtual copy of table and it allows to query based on those attributes
+# I define in schema. And when I say "Projection", I basically tell that and be which attributes it needs to keep in the virtual table.
+
