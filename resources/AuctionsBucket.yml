@@ -2,6 +2,11 @@ AuctionsBucket:
   Type: AWS::S3::Bucket
   Properties:
     BucketName: ${self:custom.AuctionsBucket.name}
+    LifecycleConfiguration:
+      Rules:
+        - Id: ExpirePictures
+          Status: Enabled
+          ExpirationInDays: 1
 
 # Specifying our bucket alone is not enough by default, as s3 buckets will be blocked from the public
 # define a bucket policy that  story to be read only for the public so anyone can view pictures for our auctions.
