@@ -1,0 +1,21 @@
+AuctionsBucket:
+  Type: AWS::S3::Bucket
+  Properties:
+    BucketName: ${self:custom.AuctionsBucket.name}
+
+# Specifying our bucket alone is not enough by default, as s3 buckets will be blocked from the public
+# define a bucket policy that  story to be read only for the public so anyone can view pictures for our auctions.
+
+AuctionsBucketPolicy:
+  Type: AWS::S3::BucketPolicy
+  Properties:
+    Bucket: !Ref AuctionsBucket
+    PolicyDocument:
+      Statement:
+        - Sid: PublicRead
+          Effect: Allow
+          Principal: '*'
+          Action:
+            - s3:GetObject
+          Resource: arn:aws:s3:::${self:custom.AuctionsBucket.name}/*
+          # three buckets are global, they don't have any region. Slash - for sub folders
